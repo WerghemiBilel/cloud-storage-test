@@ -1,0 +1,126 @@
+<div class="stepsdemo-content">
+  <p-card>
+    <ng-template pTemplate="title">
+      Confirmation
+    </ng-template>
+    <ng-template pTemplate="subtitle">
+      Verify your information
+    </ng-template>
+    <ng-template pTemplate="content">
+      <!-- <div class="p-field p-col-12">
+              <label for="class">Name</label>
+              <b>{{ticketInformation.personalInformation.firstname ? ticketInformation.personalInformation.firstname : '-'}} {{ticketInformation.personalInformation.lastname ? ticketInformation.personalInformation.lastname : '-'}}</b>
+          </div> -->
+      <!-- <div class="p-field p-col-12">
+        <label for="Age">Age</label>
+        <b>
+          {{
+            ticketInformation.personalInformation.age
+              ? ticketInformation.personalInformation.age
+              : '-'
+          }}
+        </b>
+      </div> -->
+      <div class="p-field p-col-12">
+        <label for="Duration">Duration :</label>
+        <b>
+          {{
+            ticketInformation.subscriptionInformation.duration
+              ? ticketInformation.subscriptionInformation.duration.name
+              : '-'
+          }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="Amount">Amount :</label>
+        <b>
+          {{
+            ticketInformation.subscriptionInformation.amount
+              ? ticketInformation.subscriptionInformation.amount.name
+              : '-'
+          }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="UpfrontPayment">Upfront payment :</label>
+        <b>
+          {{
+            ticketInformation.subscriptionInformation.UpfrontPayment != null
+              ? ticketInformation.subscriptionInformation.UpfrontPayment
+              : '-'
+          }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="Price">Total price :</label>
+        <b>
+          {{
+            ticketInformation.subscriptionInformation.price
+              ? ticketInformation.subscriptionInformation.price + ' €'
+              : '-'
+          }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="PriceperGb">Price per GB :</label>
+        <b>
+          {{ pricePerGb ? pricePerGb : '-' }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="CardNumber">Card Number</label>
+        <b>
+          {{
+            ticketInformation.paymentInformation.cardholderNumber
+              ? ticketInformation.paymentInformation.cardholderNumber
+              : '-'
+          }}
+        </b>
+      </div>
+
+      <div class="p-field p-col-12">
+        <label for="Email">Email :</label>
+        <b>
+          StaticEmail@gmail.com
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="Date">Date</label>
+        <b>
+          {{
+            ticketInformation.paymentInformation.date
+              ? ticketInformation.paymentInformation.date
+              : '-'
+          }}
+        </b>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="CVV">CVV</label>
+        <b>
+          {{
+            ticketInformation.paymentInformation.cvv &&
+            ticketInformation.paymentInformation.cvv.length === 3
+              ? '**' + ticketInformation.paymentInformation.cvv[2]
+              : '-'
+          }}
+        </b>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="space-between-container">
+        <p-button
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+        ></p-button>
+        <p-button
+          label="Complete"
+          (onClick)="complete()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+          styleClass="p-button-success"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
