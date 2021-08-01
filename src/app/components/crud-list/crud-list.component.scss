@@ -1,0 +1,16 @@
+// :host ::ng-deep .p-dialog .product-image {
+//   width: 150px;
+//   margin: 0 auto 2rem auto;
+//   display: block;
+// }
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.p-dialog-content {
+  overflow-y: inherit !important;
+}

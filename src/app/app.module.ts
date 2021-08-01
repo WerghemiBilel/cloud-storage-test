@@ -1,34 +1,21 @@
 import { NgModule } from '@angular/core';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { StepsComponent } from './components/steps/steps.component';
-import { StepsComponentModule } from './components/steps/steps.module';
-// import { PersonalComponent } from './components/personal/personal.component';
-// import { SeatComponent } from './components/seat/seat.component';
-// import { PaymentComponent } from './components/payment/payment.component';
-// import { ConfirmationComponent } from './components/confirmation/confirmation.component';
-// import { StepsComponentModule } from './components/steps/steps.module';
+
+
+import { CrudListComponent } from './components/crud-list/crud-list.component';
+import { CrudListComponentModule } from './components/crud-list/crud-list.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // BrowserAnimationsModule
-    // ReactiveFormsModule,
-    // FormsModule
-    // StepsComponent,
-    // PersonalComponent,
-    // SeatComponent,
-    // PaymentComponent,
-    // ConfirmationComponent
+    CrudListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StepsComponentModule
-    // StepsComponentModule
+    CrudListComponentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

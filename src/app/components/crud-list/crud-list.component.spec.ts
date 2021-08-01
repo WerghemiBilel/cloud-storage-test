@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubscriptionComponent } from './subscription.component';
+import { CrudListComponent } from './crud-list.component';
 
-describe('PersonalComponent', () => {
-  let component: SubscriptionComponent;
-  let fixture: ComponentFixture<SubscriptionComponent>;
+describe('CrudListComponent', () => {
+  let component: CrudListComponent;
+  let fixture: ComponentFixture<CrudListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubscriptionComponent ]
+      declarations: [ CrudListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubscriptionComponent);
+    fixture = TestBed.createComponent(CrudListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

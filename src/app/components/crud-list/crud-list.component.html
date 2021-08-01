@@ -1,0 +1,153 @@
+<p-toast></p-toast>
+
+<div class="card ">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+        (click)="deleteselectedPayloads()" [disabled]="!selectedPayloads || !selectedPayloads.length"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table #dt [value]="payloads" [rows]="10" [paginator]="true"
+    [globalFilterFields]="['requestStatus.value','campaignName','advice','advice','brand.name']"
+    [(selection)]="selectedPayloads" [rowHover]="true" dataKey="requestId"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">Manage Payloads</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Global Search..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">Status <p-sortIcon field="status"></p-sortIcon>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th>Type</th>
+        <th pSortableColumn="price">Brand <p-sortIcon field="brans"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="category">Submission <p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>
+          <input pInputText type="text" (input)="dt.filter($any($event.target)?.value, 'campaignName', 'contains')"
+            [value]="$any(dt.filters['name'])?.value" placeholder="Search by Name" class="p-column-filter">
+        </th>
+        <th></th>
+        <th>
+          <p-dropdown [options]="brands" (onChange)="filter($event)" optionLabel="name" styleClass="p-column-filter"
+            placeholder="Select Brand" [showClear]="true">
+            <ng-template let-option pTemplate="item">
+              <span [class]="'customer-badge status-' + option.value">{{option.name}}</span>
+            </ng-template>
+          </p-dropdown>
+        </th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-payload>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="payload"></p-tableCheckbox>
+        </td>
+        <td>{{payload.requestStatus.value}}</td>
+
+        <td>{{payload.campaignName}}</td>
+        <ng-container *ngIf="!payload.advice; else elseNotRequest">
+          <td>
+            <p-tag severity="success" value="Request"></p-tag>
+          </td>
+        </ng-container>
+
+        <ng-template #elseNotRequest>
+          <td>
+            <p-tag severity="danger" value="Advice"></p-tag>
+          </td>
+        </ng-template>
+        <td>{{payload.brand.name}}</td>
+        <td>{{moment(payload.createdDate).format('LL')}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success"
+            style="margin-right: 1em;" (click)="editPayload(payload)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deletePayload(payload)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{payloads ? payloads.length : 0 }} payloads.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="payloadDialog" [style]="{width: '80%'}" header="Payload Details" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="campaignName">Brand</label>
+      <p-dropdown [options]="brands" [(ngModel)]="payload.brand" optionLabel="name" styleClass="p-column-filter"
+        placeholder="Select Brand" [showClear]="true">
+        <ng-template let-option pTemplate="item">
+          <span [class]="'customer-badge status-' + option.value">{{option.name}}</span>
+        </ng-template>
+      </p-dropdown>
+      <small class="p-error" *ngIf="submitted && !payload.brand">Brand is required.</small>
+
+    </div>
+    <div class="p-field">
+      <label for="campaignName">Campaign Name *</label>
+      <input type="text" pInputText id="name" [(ngModel)]="payload.campaignName" required autofocus />
+      <small class="p-error" *ngIf="submitted && !payload.campaignName">Campaign Name is required.</small>
+    </div>
+
+    <div class="p-field">
+      <label for="campaignName">Media *</label>
+
+      <ng-container *ngFor="let item of medias;let i=index">
+        <div *ngIf="i%2==0">
+          <div class="row">
+            <div class="col">
+              <p-checkbox label="{{medias[i].name}}" value="medias[i].checked" [(ngModel)]="medias[i].checked"
+                [binary]="true" [binary]="true" (onChange)="addMedia($event, medias[i])">
+              </p-checkbox>
+
+            </div>
+            <div class="col">
+              <p-checkbox label="{{medias[i+1].name}}" value="medias[i+1].checked" [(ngModel)]="medias[i+1].checked"
+                [binary]="true" [binary]="true" (onChange)="addMedia($event, medias[i+1])">
+              </p-checkbox>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <small class="p-error" *ngIf="submitted && !mediaCheckedTest">Checked one media minimum.</small>
+    </div>
+
+    <div>
+      <label for="time">Time</label>
+      <p-calendar [(ngModel)]="payload.createdDate" [showTime]="true" inputId="time"></p-calendar>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="savePayload()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
